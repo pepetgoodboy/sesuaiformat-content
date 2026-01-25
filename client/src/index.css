@@ -1,0 +1,442 @@
+@import "tailwindcss";
+
+@theme {
+  --animate-fade-in: fadeIn 0.5s ease-out;
+  --animate-slide-up: slideUp 0.6s ease-out forwards;
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-float: float 3s ease-in-out infinite;
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+}
+
+/* --- CORE VARIABLES (DARK MODE DEFAULT) --- */
+:root {
+  /* Brand Colors */
+  --brand-orange: #ef7e28;
+  --brand-orange-hover: #d97706;
+  --brand-orange-glow: rgba(239, 126, 40, 0.6);
+
+  /* Backgrounds (Dark) */
+  --bg-body: #0b0f19;
+  --bg-surface: #161b2e;
+  --bg-input: #0b0e19;
+  --bg-terminal: #05070a;
+  --bg-terminal-header: #111420;
+
+  /* Text Colors (Dark) */
+  --text-main: #ffffff;
+  --text-muted: #94a3b8;
+
+  /* Borders (Dark) */
+  --border-color: #2a303e;
+  --border-focus: var(--brand-orange);
+
+  /* Helper */
+  --header-bg: rgba(11, 15, 25, 0.9);
+}
+
+/* --- LIGHT MODE OVERRIDES --- */
+body.light-mode {
+  /* Backgrounds (Light) */
+  --bg-body: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-input: #f1f5f9;
+  --bg-terminal: #ffffff;
+  --bg-terminal-header: #f1f5f9;
+
+  /* Text Colors (Light) */
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+
+  /* Borders (Light) */
+  --border-color: #e2e8f0;
+  --border-focus: var(--brand-orange);
+
+  /* Helper */
+  --header-bg: rgba(248, 250, 252, 0.9);
+}
+
+body {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  background-color: var(--bg-body);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* --- SAAS MODULAR STYLING --- */
+.saas-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.section-title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--brand-orange);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.75rem;
+}
+
+/* JUDUL SECTION JADI HITAM DI LIGHT MODE */
+body.light-mode .section-title {
+  color: #000000;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  height: 100%;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+/* --- NUMBERED STEP INDICATOR --- */
+.step-number {
+  width: 32px;
+  height: 32px;
+  background-color: var(--brand-orange);
+  color: #ffffff;
+  border: 1px solid var(--brand-orange);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 700;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+/* Text Gradient Style */
+.text-gradient {
+  background: linear-gradient(to right, #f97316, #fb923c, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+}
+
+body.light-mode .text-gradient {
+  background: linear-gradient(to right, #f97316, #fb923c, #1e293b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@media (min-width: 640px) {
+  .form-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .form-grid.full-width {
+    grid-template-columns: 1fr;
+  }
+}
+
+label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-main);
+  height: 18px;
+}
+
+.helper-text {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+/* --- FIXED HEIGHT FOR ALIGNMENT --- */
+input,
+select,
+textarea {
+  width: 100%;
+  height: 46px;
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 0 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  line-height: 1;
+}
+
+textarea {
+  height: auto;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  align-items: flex-start;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--brand-orange);
+  box-shadow: 0 0 0 1px rgba(239, 126, 40, 0.2);
+}
+
+/* --- IMPROVED DROPDOWN STYLING --- */
+optgroup {
+  background-color: var(--bg-input);
+  color: #94a3b8;
+  /* Lighter in dark mode */
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding-top: 8px;
+  border-bottom: 1px solid #334155;
+}
+
+body.light-mode optgroup {
+  color: #475569;
+  /* Darker in light mode */
+  border-bottom: 1px solid #cbd5e1;
+}
+
+option {
+  background-color: var(--bg-input);
+  color: var(--text-main);
+  font-size: 0.85rem;
+  padding: 10px;
+  font-weight: 400;
+}
+
+/* --- VALIDATION STYLING --- */
+.input-error {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.2) !important;
+  animation: shake 0.3s;
+}
+
+@keyframes shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-4px);
+  }
+
+  75% {
+    transform: translateX(4px);
+  }
+}
+
+/* --- OUTPUT TERMINAL --- */
+.terminal-window {
+  background-color: var(--bg-terminal);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 12rem);
+  min-height: 500px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+body.light-mode .terminal-window {
+  box-shadow: none;
+}
+
+.terminal-header {
+  background-color: var(--bg-terminal-header);
+  padding: 0.75rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.terminal-dots {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.dot.red {
+  background: #ef4444;
+}
+
+.dot.yellow {
+  background: #f59e0b;
+}
+
+.dot.green {
+  background: #10b981;
+}
+
+.terminal-body {
+  padding: 1.5rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: #e2e8f0;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  flex-grow: 1;
+}
+
+body.light-mode .terminal-body {
+  color: #1e293b;
+}
+
+/* --- UTILS --- */
+.btn-primary,
+.btn-secondary {
+  background-color: var(--brand-orange);
+  color: white;
+  font-weight: 600;
+  height: 50px;
+  padding: 0 1.5rem;
+  border-radius: 8px;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+.btn-primary:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border-color);
+  font-weight: 600;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 1rem;
+  line-height: 50px;
+  padding: 0;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-secondary:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: var(--text-main);
+  border-color: #475569;
+}
+
+body.light-mode .btn-secondary:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.btn-secondary svg,
+.btn-primary svg {
+  line-height: 1;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.hidden-field {
+  display: none;
+}
+
+.show-field {
+  display: block;
+  animation: fadeIn 0.3s;
+}
+
+/* --- THEME TOGGLE BUTTON --- */
+.theme-toggle {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.theme-toggle:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--brand-orange);
+  border-color: var(--brand-orange);
+}
+
+body.light-mode .theme-toggle:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.theme-toggle svg {
+  width: 20px;
+  height: 20px;
+}
