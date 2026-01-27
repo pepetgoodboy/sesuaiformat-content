@@ -777,51 +777,53 @@ Gunakan format berikut (Ulangi sesuai jumlah ${jumlahScript} jika lebih dari 1):
                                     </select>
                                     {isCustom(formData.jenis_produk) && <div className="show-field"><input type="text" id="custom_jenis_produk" value={formData.custom_jenis_produk} onChange={handleInputChange} placeholder="Tulis jenis produk manual..." className="required-field-custom" /></div>}
                                 </div>
+                            </div>
+
+                            <div className="input-group">
+                                <input type="text" id="problem" value={formData.problem} onChange={handleInputChange} placeholder="Masalah Utama (Pain Point) *" className="required-field" />
+                                <span className="helper-text text-xs pt-1">Contoh: Wajah kusam, Bingung cara diet.</span>
+                            </div>
+                            <div className="input-group">
+                                <input type="text" id="solution" value={formData.solution} onChange={handleInputChange} placeholder="Solusi Utama (Main Benefit) *" className="required-field" />
+                                <span className="helper-text text-xs pt-1">Contoh: Glowing dalam 7 hari, Diet tanpa laper.</span>
+                            </div>
+                            <div className="input-group">
+                                <input type="text" id="unique_value" value={formData.unique_value} onChange={handleInputChange} placeholder="Unique Value / Pembeda (USP) *" className="required-field" />
+                                <span className="helper-text text-xs pt-1">Kenapa harus beli disini?</span>
+                            </div>
+
+                            <div className="form-grid">
                                 <div className="input-group">
-                                    <input type="text" id="problem" value={formData.problem} onChange={handleInputChange} placeholder="Masalah Utama (Pain Point) *" className="required-field" />
-                                    <span className="helper-text text-xs pt-1">Contoh: Wajah kusam, Bingung cara diet.</span>
+                                    <label>Gaya Bahasa (Tone)</label>
+                                    <select id="tone" value={formData.tone} onChange={handleInputChange} className="required-field">
+                                        <option value="">-- Pilih Tone --</option>
+                                        <option value="Santai & Relatable">Santai & Relatable (Sok kenal)</option>
+                                        <option value="Edukatif & Profesional">Edukatif & Profesional (Guru)</option>
+                                        <option value="Urgent & Direct">Urgent & Direct (Penjual Agresif)</option>
+                                        <option value="Gen-Z / Anak Jaksel">Gen-Z / Anak Jaksel (Gaul)</option>
+                                        <option value="Witty & Humorous">Witty & Humorous (Lucu)</option>
+                                        <option value="Empathetic">Empathetic (Empati, Mengerti)</option>
+                                        <option value="Minimalist">Minimalist (Singkat, Padat)</option>
+                                        <option value="custom">Lainnya (Isi Manual)</option>
+                                    </select>
+                                    {isCustom(formData.tone) && <div className="show-field"><input type="text" id="custom_tone" value={formData.custom_tone} onChange={handleInputChange} placeholder="Tulis tone manual..." className="required-field-custom" /></div>}
                                 </div>
                                 <div className="input-group">
-                                    <input type="text" id="solution" value={formData.solution} onChange={handleInputChange} placeholder="Solusi Utama (Main Benefit) *" className="required-field" />
-                                    <span className="helper-text text-xs pt-1">Contoh: Glowing dalam 7 hari, Diet tanpa laper.</span>
-                                </div>
-                                <div className="input-group">
-                                    <input type="text" id="unique_value" value={formData.unique_value} onChange={handleInputChange} placeholder="Unique Value / Pembeda (USP) *" className="required-field" />
-                                    <span className="helper-text text-xs pt-1">Kenapa harus beli disini?</span>
-                                </div>
-                                <div className="form-grid">
-                                    <div className="input-group">
-                                        <label>Gaya Bahasa (Tone)</label>
-                                        <select id="tone" value={formData.tone} onChange={handleInputChange} className="required-field">
-                                            <option value="">-- Pilih Tone --</option>
-                                            <option value="Santai & Relatable">Santai & Relatable (Sok kenal)</option>
-                                            <option value="Edukatif & Profesional">Edukatif & Profesional (Guru)</option>
-                                            <option value="Urgent & Direct">Urgent & Direct (Penjual Agresif)</option>
-                                            <option value="Gen-Z / Anak Jaksel">Gen-Z / Anak Jaksel (Gaul)</option>
-                                            <option value="Witty & Humorous">Witty & Humorous (Lucu)</option>
-                                            <option value="Empathetic">Empathetic (Empati, Mengerti)</option>
-                                            <option value="Minimalist">Minimalist (Singkat, Padat)</option>
-                                            <option value="custom">Lainnya (Isi Manual)</option>
-                                        </select>
-                                        {isCustom(formData.tone) && <div className="show-field"><input type="text" id="custom_tone" value={formData.custom_tone} onChange={handleInputChange} placeholder="Tulis tone manual..." className="required-field-custom" /></div>}
-                                    </div>
-                                    <div className="input-group">
-                                        <label>Call to Action (CTA)</label>
-                                        <select id="cta" value={formData.cta} onChange={handleInputChange} className="required-field">
-                                            <option value="">-- Pilih CTA --</option>
-                                            <option value="Klik Link di Bio">Klik Link di Bio</option>
-                                            <option value="DM / Chat Sekarang">DM / Chat Sekarang</option>
-                                            <option value='Comment "INFO"'>Comment "INFO"</option>
-                                            <option value="Follow & Save">Follow & Save</option>
-                                            <option value="Beli Sekarang">Beli Sekarang</option>
-                                            <option value="Daftar Sekarang">Daftar Sekarang</option>
-                                            <option value="Swipe Up">Swipe Up (Stories)</option>
-                                            <option value="Start Free Trial">Start Free Trial</option>
-                                            <option value="Download Asset / E-book">Download Asset / E-book</option>
-                                            <option value="custom">Lainnya (Isi Manual)</option>
-                                        </select>
-                                        {isCustom(formData.cta) && <div className="show-field"><input type="text" id="custom_cta" value={formData.custom_cta} onChange={handleInputChange} placeholder="Tulis CTA manual..." className="required-field-custom" /></div>}
-                                    </div>
+                                    <label>Call to Action (CTA)</label>
+                                    <select id="cta" value={formData.cta} onChange={handleInputChange} className="required-field">
+                                        <option value="">-- Pilih CTA --</option>
+                                        <option value="Klik Link di Bio">Klik Link di Bio</option>
+                                        <option value="DM / Chat Sekarang">DM / Chat Sekarang</option>
+                                        <option value='Comment "INFO"'>Comment "INFO"</option>
+                                        <option value="Follow & Save">Follow & Save</option>
+                                        <option value="Beli Sekarang">Beli Sekarang</option>
+                                        <option value="Daftar Sekarang">Daftar Sekarang</option>
+                                        <option value="Swipe Up">Swipe Up (Stories)</option>
+                                        <option value="Start Free Trial">Start Free Trial</option>
+                                        <option value="Download Asset / E-book">Download Asset / E-book</option>
+                                        <option value="custom">Lainnya (Isi Manual)</option>
+                                    </select>
+                                    {isCustom(formData.cta) && <div className="show-field"><input type="text" id="custom_cta" value={formData.custom_cta} onChange={handleInputChange} placeholder="Tulis CTA manual..." className="required-field-custom" /></div>}
                                 </div>
                             </div>
                         </div>
