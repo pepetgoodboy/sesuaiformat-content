@@ -166,7 +166,7 @@ body.light-mode .section-title {
 }
 
 body.light-mode .text-gradient {
-  background: linear-gradient(to right, #f97316, #fb923c, #1e293b);
+  background: linear-gradient(to right, #f97316, #fb923c);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
