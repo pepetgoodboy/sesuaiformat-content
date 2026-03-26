@@ -1,3 +1,4 @@
+name: sesuaiformat-script
 services:
   sesuaiformat-script:
     container_name: sesuaiformat-script
