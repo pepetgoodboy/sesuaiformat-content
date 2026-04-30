@@ -7,9 +7,10 @@ const Toast = ({ toasts, removeToast }) => {
             {toasts.map((toast) => (
                 <div
                     key={toast.id}
-                    className={`flex items-center gap-3 px-6 py-4 rounded-lg bg-gray-900/95 text-white backdrop-blur border-l-4 shadow-lg transition-all duration-300 animate-slide-in [.light-mode_&]:bg-white [.light-mode_&]:text-slate-900 [.light-mode_&]:border-slate-200 ${toast.type === 'success' ? 'border-green-500' :
+                    className={`flex items-center gap-3 px-6 py-4 rounded-lg backdrop-blur border-l-4 shadow-lg transition-all duration-300 animate-fade-in ${toast.type === 'success' ? 'border-green-500' :
                         toast.type === 'error' ? 'border-red-500' : 'border-orange-500'
                         }`}
+                    style={{ backgroundColor: 'var(--card-bg)', color: 'var(--text-main)' }}
                 >
                     {toast.type === 'success' && (
                         <svg className="w-5 h-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" /></svg>

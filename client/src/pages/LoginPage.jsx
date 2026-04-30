@@ -12,25 +12,30 @@ const LoginPage = () => {
     const navigate = useNavigate();
     const { signIn } = useAuth();
 
+    const [isDarkMode, setIsDarkMode] = useState(true);
+
     // Theme initialization
     useEffect(() => {
         const savedTheme = localStorage.getItem('theme');
-        // Check if light mode should be active
         if (savedTheme === "light") {
-            document.body.classList.add("light-mode");
+            document.documentElement.removeAttribute("data-theme");
+            setIsDarkMode(false);
         } else {
-            // Default is dark (no class) or check system pref if no save
-            // But per design HTML, default is dark.
-            document.body.classList.remove("light-mode");
+            document.documentElement.setAttribute("data-theme", "dark");
+            setIsDarkMode(true);
         }
     }, []);
 
     const toggleTheme = () => {
-        const body = document.body;
-        body.classList.toggle("light-mode");
-        const isLight = body.classList.contains("light-mode");
-        localStorage.setItem("theme", isLight ? "light" : "dark");
-        // Force re-render if needed, but class toggle drives UI
+        if (isDarkMode) {
+            document.documentElement.removeAttribute("data-theme");
+            localStorage.setItem("theme", "light");
+            setIsDarkMode(false);
+        } else {
+            document.documentElement.setAttribute("data-theme", "dark");
+            localStorage.setItem("theme", "dark");
+            setIsDarkMode(true);
+        }
     };
 
     const showToast = (message, type = 'default') => {
@@ -81,7 +86,14 @@ const LoginPage = () => {
             <Toast toasts={toasts} />
 
             {/* Background Ambient Light */}
-            <div className="absolute w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(249,115,22,0.15)_0%,rgba(11,15,25,0)_70%)] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-[1] pointer-events-none [.light-mode_&]:bg-[radial-gradient(circle,rgba(249,115,22,0.08)_0%,rgba(243,244,246,0)_70%)]"></div>
+            <div
+                className="absolute w-[600px] h-[600px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-[1] pointer-events-none"
+                style={{
+                    background: isDarkMode
+                        ? 'radial-gradient(circle, rgba(249,115,22,0.15) 0%, rgba(11,15,25,0) 70%)'
+                        : 'radial-gradient(circle, rgba(249,115,22,0.08) 0%, rgba(243,244,246,0) 70%)',
+                }}
+            ></div>
 
             {/* Theme Toggle Button */}
             <div className="fixed top-6 right-6 z-50">
@@ -90,12 +102,15 @@ const LoginPage = () => {
                     className="p-2.5 rounded-xl bg-white/5 border-2 border-orange-500/50 text-orange-500 hover:bg-orange-500 hover:text-white hover:shadow-[0_0_15px_rgba(249,115,22,0.6)] transition-all duration-300 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-orange-500/50 cursor-pointer"
                     aria-label="Toggle Dark Mode"
                 >
-                    <svg className="w-5 h-5 hidden [.light-mode_&]:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                    </svg>
-                    <svg className="w-5 h-5 block [.light-mode_&]:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                    </svg>
+                    {isDarkMode ? (
+                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                    ) : (
+                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                    )}
                 </button>
             </div>
 
@@ -115,7 +130,7 @@ const LoginPage = () => {
                     </div>
 
                     {/* Login Card */}
-                    <div className="rounded-[2.5rem] p-8 sm:p-10 backdrop-blur-md border shadow-2xl transition-all duration-300 [.light-mode_&]:shadow-xl" style={{ backgroundColor: 'var(--bg-surface)', borderColor: 'var(--border-color)' }}>
+                    <div className="rounded-[2.5rem] p-8 sm:p-10 backdrop-blur-md border shadow-2xl transition-all duration-300" style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--card-border)' }}>
                         <form onSubmit={handleLogin} className="space-y-6">
 
                             {/* Email Field */}
@@ -128,8 +143,8 @@ const LoginPage = () => {
                                         type="email"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
-                                        className="w-full rounded-xl pl-12 pr-4 py-3.5 text-sm placeholder-slate-600 focus:placeholder-slate-500 border focus:outline-none focus:border-orange-500 focus:shadow-[0_0_0_3px_rgba(249,115,22,0.15)] transition-all duration-200 [.light-mode_&]:focus:bg-white"
-                                        style={{ backgroundColor: 'var(--bg-input)', borderColor: 'var(--border-color)', color: 'var(--text-main)' }}
+                                        className="w-full rounded-xl pl-12 pr-4 py-3.5 text-sm placeholder-slate-600 focus:placeholder-slate-500 border focus:outline-none focus:border-orange-500 focus:shadow-[0_0_0_3px_rgba(249,115,22,0.15)] transition-all duration-200"
+                                        style={{ backgroundColor: 'var(--input-bg)', borderColor: 'var(--card-border)', color: 'var(--text-main)' }}
                                         placeholder="nama@perusahaan.com"
                                         autoComplete="email"
                                         required
@@ -149,8 +164,8 @@ const LoginPage = () => {
                                         type={showPassword ? "text" : "password"}
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
-                                        className="w-full rounded-xl pl-12 pr-12 py-3.5 text-sm placeholder-slate-600 focus:placeholder-slate-500 border focus:outline-none focus:border-orange-500 focus:shadow-[0_0_0_3px_rgba(249,115,22,0.15)] transition-all duration-200 [.light-mode_&]:focus:bg-white"
-                                        style={{ backgroundColor: 'var(--bg-input)', borderColor: 'var(--border-color)', color: 'var(--text-main)' }}
+                                        className="w-full rounded-xl pl-12 pr-12 py-3.5 text-sm placeholder-slate-600 focus:placeholder-slate-500 border focus:outline-none focus:border-orange-500 focus:shadow-[0_0_0_3px_rgba(249,115,22,0.15)] transition-all duration-200"
+                                        style={{ backgroundColor: 'var(--input-bg)', borderColor: 'var(--card-border)', color: 'var(--text-main)' }}
                                         placeholder="••••••••••••"
                                         autoComplete="current-password"
                                         required
@@ -158,7 +173,7 @@ const LoginPage = () => {
                                     <button
                                         type="button"
                                         onClick={togglePassword}
-                                        className="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-500 hover:text-slate-300 transition-colors cursor-pointer [.light-mode_&]:hover:text-slate-700"
+                                        className="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-500 hover:text-slate-300 transition-colors cursor-pointer"
                                     >
                                         {!showPassword ? (
                                             <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
